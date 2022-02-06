@@ -26,6 +26,7 @@ function NumberField(props) {
     disabled, 
     size, 
     required,
+    className,
     } = props;
   const { name } = field;
 
@@ -41,6 +42,7 @@ function NumberField(props) {
       max={10}
       precision={2}
       required={required}
+      className={className}
       hideControls
       {...field}
       onChange={(option, action) => {

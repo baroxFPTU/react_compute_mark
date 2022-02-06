@@ -1,4 +1,4 @@
-import { Box, Center, Group, Header, useMantineColorScheme, createStyles } from '@mantine/core';
+import { Box, Center, Group, Header, useMantineColorScheme, createStyles, MediaQuery, Burger } from '@mantine/core';
 import React from 'react';
 
 const useStyles = createStyles((theme) => {
@@ -7,6 +7,9 @@ const useStyles = createStyles((theme) => {
       paddingLeft: '20px',
       paddingRight: '20px',
       height: '100%'
+    },
+    groupLeft: {
+      display:'flex', alignItems: 'center'
     }
   }
 })
@@ -18,7 +21,16 @@ function MainHeader(props) {
   return (
      <Header height={60}>
        <Group position="apart" spacing="xl" className={classes.groupHeader}>
-        <Box>
+        <Box className={classes.groupLeft}>
+          <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                // opened={opened}
+                // onClick={() => setOpened((o) => !o)}
+                size="sm"
+                // color={theme.colors.gray[6]}
+                mr="xl"
+              />
+          </MediaQuery>
           <Center inline>
           <h3>
           Compute Mark
