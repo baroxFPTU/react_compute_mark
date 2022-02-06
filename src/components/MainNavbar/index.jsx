@@ -20,7 +20,6 @@ function MainNavbar(props) {
       hiddenBreakpoint="sm"
     >
       <Navbar.Section>
-        <h3>Compute Mark</h3>
       </Navbar.Section>
       <Navbar.Section grow>
         <MainLinks/>
