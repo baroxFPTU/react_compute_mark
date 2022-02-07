@@ -1,3 +1,7 @@
+// Header
+const MAIN_HEADER_HEIGHT = 60;
+
+// Form
 const GRADUATED_TARGET_OPTIONS = [
   { value: "thpt", label: "THPT" },
   { value: "gdtx", label: "GDTX" },
@@ -14,7 +18,7 @@ const GRADUATED_ENCOURAGE_MARK_OPTIONS = [
   { value: 4, label: "4" },
 ];
 
-const GRADUATED_PIOR_MARK_OPTIONS = [
+const GRADUATED_PRIOR_MARK_OPTIONS = [
   { value: 0, label: "0" },
   { value: 0.25, label: "0.25" },
   { value: 0.5, label: "0.5" },
@@ -22,7 +26,8 @@ const GRADUATED_PIOR_MARK_OPTIONS = [
 ];
 
 export {
+  MAIN_HEADER_HEIGHT,
   GRADUATED_TARGET_OPTIONS,
   GRADUATED_ENCOURAGE_MARK_OPTIONS,
-  GRADUATED_PIOR_MARK_OPTIONS,
+  GRADUATED_PRIOR_MARK_OPTIONS,
 };

@@ -1,10 +1,12 @@
-import { Select } from '@mantine/core';
-import { FastField, Field, Form, Formik } from 'formik';
+import { Button, Center } from '@mantine/core';
+import { FastField, Form, Formik } from 'formik';
 import React from 'react';
-import CustomGrid from '../../../../components/CustomGrid';
 import NumberField from '../../../../components/CustomField/NumberField';
 import SelectField from '../../../../components/CustomField/SelectField';
-import { GRADUATED_ENCOURAGE_MARK_OPTIONS, GRADUATED_PIOR_MARK_OPTIONS, GRADUATED_TARGET_OPTIONS } from '../../../../constants/global';
+import CustomGrid from '../../../../components/CustomGrid';
+import { GRADUATED_ENCOURAGE_MARK_OPTIONS, GRADUATED_PRIOR_MARK_OPTIONS, GRADUATED_TARGET_OPTIONS } from '../../../../constants/global';
+import * as Yup from 'yup';
+import GraduatedMark from '../../../../services/Calculating/GraduatedMark';
 
 function GraduatedCalcForm(props) {
   const initialValues = {
@@ -12,13 +14,30 @@ function GraduatedCalcForm(props) {
     math: '',
     literature: '',
     language: '',
+    average: '',
     combination: '',
-    encouraged: 0,
-    pior: 0
-  }
+    encouraged: -1,
+    prior: -1,
+  };
+
+  const validationSchema = Yup.object().shape({
+    math: Yup.number().required('Bạn quên nhập điểm Toán nè!'),
+    literature: Yup.number().required('Bạn quên nhập điểm Văn nè!'),
+    language: Yup.number().required('Bạn quên nhập điểm Ngoại Ngữ nè!'),
+    average: Yup.number().required('Điểm trung bình lớp 12 của bạn là?'),
+    combination: Yup.number().required('Bạn quên nhập điểm tổ hợp'),
+    encouraged: Yup.number().moreThan(-1,'Vui lòng chọn điểm khuyến khích').required('Vui lòng chọn điểm khuyến khích'),
+    prior: Yup.number().moreThan(-1,'Vui lòng chọn điểm ưu tiên').required('Vui lòng chọn điểm ưu tiên')
+  });
 
   return (
-    <Formik initialValues={initialValues}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={values => {
+      console.log(values);
+      GraduatedMark(values.target, values);
+    }}>
       {
         formikValues => {
           const {values, errors, touched, handleChange} = formikValues;
@@ -40,7 +59,6 @@ function GraduatedCalcForm(props) {
 
                   label="Toán"
                   size="md"
-                  required
                 />
                 <FastField
                   name="literature"
@@ -48,7 +66,6 @@ function GraduatedCalcForm(props) {
 
                   label="Văn"
                   size="md"
-                  required
                 />
               </CustomGrid>
               <CustomGrid>
@@ -58,7 +75,6 @@ function GraduatedCalcForm(props) {
 
                   label="Ngoại ngữ"
                   size="md"
-                  required
                 />
                 <FastField
                   name="combination"
@@ -66,7 +82,6 @@ function GraduatedCalcForm(props) {
 
                   label="Tổ hợp"
                   size="md"
-                  required
                 />
               </CustomGrid>
               <CustomGrid>
@@ -79,14 +94,24 @@ function GraduatedCalcForm(props) {
                   data={GRADUATED_ENCOURAGE_MARK_OPTIONS}
                   />
                 <FastField
-                  name="pior"
+                  name="prior"
                   component={SelectField}
 
                   label="Điểm ưu tiên"
                   size="md"
-                  data={ GRADUATED_PIOR_MARK_OPTIONS}
+                  data={ GRADUATED_PRIOR_MARK_OPTIONS}
                 />
               </CustomGrid>
+              <FastField
+                  name="average"
+                  component={NumberField}
+
+                  label="Trung bình lớp 12"
+                  size="md"
+                />
+              <Center mt="xl">
+                <Button type="submit" color="indigo" size="md">Hoàn tất</Button>
+              </Center>
             </Form>
           )
         }

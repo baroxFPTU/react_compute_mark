@@ -1,5 +1,6 @@
 import { Box, Center, Group, Header, useMantineColorScheme, createStyles, MediaQuery, Burger } from '@mantine/core';
 import React from 'react';
+import { MAIN_HEADER_HEIGHT } from '../../constants/global';
 
 const useStyles = createStyles((theme) => {
   return {
@@ -19,7 +20,7 @@ function MainHeader(props) {
   const { classes } = useStyles();
 
   return (
-     <Header height={60}>
+     <Header height={MAIN_HEADER_HEIGHT}>
        <Group position="apart" spacing="xl" className={classes.groupHeader}>
         <Box className={classes.groupLeft}>
           <MediaQuery largerThan="sm" styles={{ display: 'none' }}>

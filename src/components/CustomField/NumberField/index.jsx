@@ -29,6 +29,9 @@ function NumberField(props) {
     className,
     } = props;
   const { name } = field;
+  const { errors, touched} = form;
+
+  const errorMessage = (errors[name] && touched[name]) ? errors[name] : null;
 
   return (
     <NumberInput
@@ -43,6 +46,7 @@ function NumberField(props) {
       precision={2}
       required={required}
       className={className}
+      error={errorMessage}
       hideControls
       {...field}
       onChange={(option, action) => {

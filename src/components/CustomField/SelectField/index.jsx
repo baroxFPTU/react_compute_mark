@@ -20,8 +20,11 @@ SelectField.defaultProps = {
 }
 
 function SelectField(props) {
-  const { field, label, placeholder, size, required, className, data, searchable } = props;
+  const { field, form, label, placeholder, size, required, className, data, searchable } = props;
   const { name } = field;
+  const { errors, touched } = form;
+
+  const errorMessage = (errors[name] && touched[name]) ? errors[name] : null;
 
   const handleChangeOption = (selectedOption) => {
     const selectedValue = selectedOption.value || selectedOption;
@@ -44,6 +47,7 @@ function SelectField(props) {
       required={required}
       className={className}
       searchable={searchable}
+      error={errorMessage}
 
       {...field}
       onChange={handleChangeOption}
