@@ -16,6 +16,7 @@ function MainNavbar(props) {
     <Navbar
       width={{...widthConfig}}
       padding="xs"
+      height=""
       hidden={!opened}
       hiddenBreakpoint="sm"
       fixed={opened}

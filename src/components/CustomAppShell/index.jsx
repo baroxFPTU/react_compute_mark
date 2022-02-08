@@ -22,7 +22,16 @@ function CustomAppShell({children}) {
           height={"100%"}
           navbar={<MainNavbar opened={opened} />}
           header={<MainHeader opened={opened} toggleOpened={setOpened} />}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            alignItems: 'stretch'
+          }}
           styles={(theme) => ({
+            body: {
+              height: '100%',
+            },
             main: {
               backgroundColor:
                 theme.colorScheme === "dark"
