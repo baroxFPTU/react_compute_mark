@@ -1,6 +1,6 @@
 import { Button, Center } from '@mantine/core';
 import { FastField, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import NumberField from '../../../../components/CustomField/NumberField';
 import SelectField from '../../../../components/CustomField/SelectField';
 import CustomGrid from '../../../../components/CustomGrid';
@@ -9,8 +9,9 @@ import * as Yup from 'yup';
 import GraduatedMark from '../../../../services/Calculating/GraduatedMark';
 
 function GraduatedCalcForm(props) {
+  const [target, setTarget] = useState('thpt');
   const initialValues = {
-    target: 'thpt',
+    target: target,
     math: '',
     literature: '',
     language: '',
@@ -23,7 +24,10 @@ function GraduatedCalcForm(props) {
   const validationSchema = Yup.object().shape({
     math: Yup.number().required('Bạn quên nhập điểm Toán nè!'),
     literature: Yup.number().required('Bạn quên nhập điểm Văn nè!'),
-    language: Yup.number().required('Bạn quên nhập điểm Ngoại Ngữ nè!'),
+    language: Yup.number().when('target', {
+      is: 'thpt',
+      then: Yup.number().required('Bạn quên nhập điểm Ngoại Ngữ nè!')
+    }),
     average: Yup.number().required('Điểm trung bình lớp 12 của bạn là?'),
     combination: Yup.number().required('Bạn quên nhập điểm tổ hợp'),
     encouraged: Yup.number().moreThan(-1,'Vui lòng chọn điểm khuyến khích').required('Vui lòng chọn điểm khuyến khích'),
@@ -41,6 +45,11 @@ function GraduatedCalcForm(props) {
       {
         formikValues => {
           const {values, errors, touched, handleChange} = formikValues;
+
+          // if (values.target !== target) {
+          //   console.log(target);
+          //   setTarget(values.target);
+          // }
 
           return (
             <Form>
@@ -68,14 +77,14 @@ function GraduatedCalcForm(props) {
                   size="md"
                 />
               </CustomGrid>
-              <CustomGrid>
-                <FastField
+              <CustomGrid fluid={values.target !== 'thpt'}>
+                {values.target === 'thpt' && <FastField
                   name="language"
                   component={NumberField}
 
                   label="Ngoại ngữ"
                   size="md"
-                />
+                />}
                 <FastField
                   name="combination"
                   component={NumberField}

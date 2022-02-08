@@ -1,6 +1,7 @@
-import { Box, Center, Group, Header, useMantineColorScheme, createStyles, MediaQuery, Burger } from '@mantine/core';
-import React from 'react';
-import { MAIN_HEADER_HEIGHT } from '../../constants/global';
+import { ActionIcon, Box, Burger, Button, Center, createStyles, Group, Header, MediaQuery, ThemeIcon, useMantineColorScheme, useMantineTheme } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
+import React, { useEffect } from 'react';
+import { BsFillMoonStarsFill, BsSunFill } from "react-icons/bs";
 
 const useStyles = createStyles((theme) => {
   return {
@@ -17,18 +18,27 @@ const useStyles = createStyles((theme) => {
 
 function MainHeader(props) {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const { width } = useViewportSize();
   const { classes } = useStyles();
+  const theme = useMantineTheme();
+  const {opened, toggleOpened} = props;
+
+  useEffect(() => {
+    if (width >= theme.breakpoints.sm) {
+      toggleOpened(false);
+    }
+  }, [width]);
 
   return (
-     <Header height={MAIN_HEADER_HEIGHT}>
+     <Header height={60} fixed={opened}>
        <Group position="apart" spacing="xl" className={classes.groupHeader}>
         <Box className={classes.groupLeft}>
           <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
-                // opened={opened}
-                // onClick={() => setOpened((o) => !o)}
+                opened={opened}
+                onClick={() => toggleOpened((o) => !o)}
                 size="sm"
-                // color={theme.colors.gray[6]}
+                color={theme.colors.gray[6]}
                 mr="xl"
               />
           </MediaQuery>
@@ -38,7 +48,9 @@ function MainHeader(props) {
           </h3>
           </Center>
         </Box>
-          <button onClick={() => toggleColorScheme()}>Click me</button>
+            <ActionIcon color={colorScheme === "light" ? "cyan" :  "yellow"} size="lg" radius="md" onClick={() => toggleColorScheme()}>
+                {colorScheme === 'light' ? <BsFillMoonStarsFill/> : <BsSunFill/>} 
+            </ActionIcon>
        </Group>
     </Header>
   )

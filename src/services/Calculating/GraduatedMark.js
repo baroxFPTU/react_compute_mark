@@ -17,20 +17,14 @@ function formalSchoolCalc(marks) {
   );
 }
 
-function informalSchoolCalc(
-  mathScore,
-  literatureScore,
-  freeScore,
-  encorScore,
-  averageYear,
-  priorScore
-) {
+function informalSchoolCalc(marks) {
+  const { math, literature, combination, encouraged, average, prior } = marks;
+
   return (
-    (((4 * (mathScore + literatureScore + freeScore) + 3 * encorScore) / 12) *
-      7 +
-      averageYear * 3) /
+    (((4 * (math + literature + combination) + 3 * encouraged) / 12) * 7 +
+      average * 3) /
       10 +
-    priorScore
+    prior
   );
 }
 
@@ -38,18 +32,21 @@ function GraduatedMark(target, marks) {
   if (!marks) return;
   let finalResult = 0;
 
+  console.log("Tinh toan diem cua ", target);
+
   switch (target) {
     case "thpt":
       finalResult = formalSchoolCalc(marks);
       break;
     case "gdtx":
+      finalResult = informalSchoolCalc(marks);
       break;
     default:
       return;
   }
 
-  console.log(finalResult);
-  return finalResult;
+  console.log(Math.round(finalResult * 100) / 100);
+  return Math.round(finalResult * 100) / 100;
 }
 
 export default GraduatedMark;
